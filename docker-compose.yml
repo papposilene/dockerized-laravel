@@ -27,7 +27,7 @@ services:
     container_name: mysql
     restart: always
     volumes:
-      - ./dockerfile/mysql:/var/lib/mysql
+      - ./dockerfile/sql:/var/lib/sql
     tty: true
     ports:
       - 3306:3306
@@ -37,15 +37,16 @@ services:
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
       SERVICE_TAGS: dev
-      SERVICE_NAME: db
+      SERVICE_NAME: mysql
     networks:
       - laravel
 
   phpmyadmin:
-    image: phpmyadmin:5-fpm
+    image: phpmyadmin:fpm-alpine
     container_name: phpmyadmin
     restart: always
     depends_on:
+      - php
       - db
     environment:
       - PMA_ARBITRARY=1
@@ -54,10 +55,10 @@ services:
       - PMA_USER=root
       - PMA_PASSWORD=
     ports:
-      - 8026:8026
+      - 1024:1024
+      - 8024:8024
     networks:
       - laravel
-
 
   php:
     build:
