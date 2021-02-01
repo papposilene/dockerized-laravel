@@ -16,18 +16,18 @@ services:
     depends_on:
       - php
       - redis
-      - mysql
+      - db
       - mailhog
     networks:
       - laravel
 
-  mysql:
+  db:
     image: mysql:5.7
     platform: linux/x86_64
     container_name: mysql
     restart: always
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./dockerfile/mysql:/var/lib/mysql
     tty: true
     ports:
       - 3306:3306
@@ -37,21 +37,26 @@ services:
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
       SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      SERVICE_NAME: db
     networks:
       - laravel
 
   phpmyadmin:
     image: phpmyadmin:5-fpm
     container_name: phpmyadmin
-    ports:
-      - 8026:8026
+    restart: always
+    depends_on:
+      - db
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=mysql
+      - PMA_HOST=db
       - PMA_PORT=3306
       - PMA_USER=root
       - PMA_PASSWORD=
+    ports:
+      - 8026:8026
+    networks:
+      - laravel
 
 
   php:
@@ -106,7 +111,7 @@ services:
     volumes:
       - ./:/var/www/html:delegated
     depends_on:
-      - mysql
+      - db
     working_dir: /var/www/html
     user: laravel
     entrypoint: ['php', '/var/www/html/artisan']
@@ -123,4 +128,4 @@ services:
       - laravel
 
 volumes:
-  mysql-data:
+  db-data:
