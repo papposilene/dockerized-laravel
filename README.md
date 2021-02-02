@@ -15,7 +15,7 @@ Bringing up the Docker Compose network with `site` instead of just using `up`, e
 
 - **nginx** - `:80`
 - **mysql** - `:3306`
-- **phpMyAdmin** - `:8026`
+- **phpmyadmin** - `:8024`
 - **php** - `:9000`
 - **redis** - `:6379`
 - **mailhog** - `:8025` 
@@ -26,17 +26,10 @@ Three additional containers are included that handle Composer, NPM, and Artisan 
 - `docker-compose run --rm npm run dev`
 - `docker-compose run --rm artisan migrate` 
 
-## Persistent MySQL Storage
+## phpMyAdmin
 
-By default, whenever you bring down the Docker network, your MySQL data will be removed after the containers are destroyed. If you would like to have persistent data that remains after bringing containers down and back up, do the following:
+To access to your phpMyAdmin, go to `http://localhost:8024/` and enter those credentials : server `db`, user `homestead` and password `secret` (or anything else you decide in the environnement variables in your `docker-composer.yml` file.
 
-1. Create a `.dockerfile/mysql` folder in the project root, alongside the `.dockerfile/nginx` folder.
-2. Under the mysql service in your `docker-compose.yml` file, add the following lines:
-
-```
-volumes:
-  - .dockerfile/sql:/var/lib/mysql
-```
 
 ## MailHog
 
