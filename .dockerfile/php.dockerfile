@@ -14,7 +14,7 @@ RUN apk update \
     && echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.idekey=mertblog.net" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_host=docker.localhost" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_host=docker.for.mac.localhost" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && rm -rf /tmp/*
 
 ADD .dockerfile/php/www.conf /usr/local/etc/php-fpm.d/www.conf
@@ -28,3 +28,5 @@ RUN chown laravel:laravel /var/www/html
 WORKDIR /var/www/html
 
 RUN docker-php-ext-install pdo pdo_mysql
+
+EXPOSE 9000
