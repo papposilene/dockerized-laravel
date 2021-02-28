@@ -64,6 +64,7 @@ services:
       context: .
       dockerfile: .dockerfile/php.dockerfile
     container_name: php
+    restart: always
     depends_on:
       - db
     volumes:
@@ -123,6 +124,7 @@ services:
   mailhog:
     image: mailhog/mailhog:latest
     container_name: mailhog
+    restart: always
     ports:
       - 1025:1025
       - 8025:8025
