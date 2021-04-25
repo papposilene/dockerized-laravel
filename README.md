@@ -9,7 +9,7 @@ To get started, make sure you have [Docker installed](https://docs.docker.com/do
 
 Next, navigate in your terminal to the directory you cloned this, and spin up the containers for the web server by running `docker-compose build && docker-compose up -d`.
 
-After that completes, run `docker-compose run --rm composer create-project --prefer-dist laravel/laravel:^7.0 .` or clone a existent Laravel project in the root folder.
+After that completes, run `docker-compose run --rm composer create-project --prefer-dist laravel/laravel .` or clone a existent Laravel project in the root folder.
 
 Bringing up the Docker Compose network with `site` instead of just using `up`, ensures that only our site's containers are brought up at the start, instead of all of the command containers as well. The following are built for our web server, with their exposed ports detailed:
 
